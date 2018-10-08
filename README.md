@@ -11,7 +11,7 @@ Command line interface to check TurtleCoin network status and community activity
 Clone this repository
 
 ```sh
-$ git clone https://github.com/sajo8/trtl-cli-py.git
+$ git clone https://github.com/turtlecoin/trtl-cli-py.git
 ```
 
 Install the dependencies
