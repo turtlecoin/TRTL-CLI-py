@@ -10,23 +10,14 @@ def nodes():
 
     nodes = requests.get('https://raw.githubusercontent.com/turtlecoin/turtlecoin-nodes-json/master/turtlecoin-nodes.json').json()
 
-    nn = 0
+    for x in nodes['nodes']:
+        node_name = Fore.GREEN + x['name'] + Fore.RESET
+        url_link = Fore.GREEN + x['url'] + Fore.RESET
+        port_no = Fore.YELLOW + str(x['port']) + Fore.RESET
+        if x['ssl']:
+            ssl_status = Fore.GREEN + str(x['ssl']) + Fore.RESET
+        else:
+            ssl_status = Fore.RED + str(x['ssl']) + Fore.RESET
 
-    try:
-        while True:
-            node_name = Fore.GREEN + nodes['nodes'][nn]['name'] + Fore.RESET
-            url_link = Fore.GREEN + nodes['nodes'][nn]['url'] + Fore.RESET
-            port_no = Fore.YELLOW + str(nodes['nodes'][nn]['port']) + Fore.RESET
-            ssl_stat = nodes['nodes'][nn]['ssl']
-            if ssl_stat:
-                ssl_status = Fore.GREEN + str(ssl_stat) + Fore.RESET
-            else:
-                ssl_status = Fore.RED + str(ssl_stat) + Fore.RESET
-
-            t.add_row([node_name, url_link, port_no, ssl_status])
-            nn += 1
-
-    except IndexError:
-        pass
-
+        t.add_row([node_name, url_link, port_no, ssl_status])
     return {'table': t}
