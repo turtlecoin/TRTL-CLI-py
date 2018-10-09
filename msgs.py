@@ -23,7 +23,7 @@ version = Fore.YELLOW + """\
   Made by Sajo8
   Based off of TRTL CLI made by mrrovot, zack796, and brandonlehman
 
-  Version 1.1.0
+  Version 1.2.0
 """ + Style.RESET_ALL
 
 help_msg = Fore.YELLOW + """\
@@ -47,6 +47,7 @@ help_msg = Fore.YELLOW + """\
 	ascii list|al  Displays a list of ASCII art
 	checkpoints|c  Gets latest checkpoint update                                                  
         nodes|no        Displays a table of available remote nodes
+        tx|t           Displays information on given tx hash/mempool
 
 	license|l      Show license information
         exit|e         Quit the program

@@ -22,6 +22,7 @@ from askee import askee #processes and returns info for commands `a` or `ascii`
 from checkpoints import checkpoints #for c or checkpoints
 from price import price #for p or price
 from nodes import nodes # for nodes stuf
+from tx import txs # for tx stuf
 
 from random import randint # for random ascii art
 from colorama import Fore, Style, init
@@ -41,6 +42,7 @@ ascii_commands = ['ascii', 'a']
 ascii_list_commands = ['ascii list', 'al']
 checkpoints_commands = ['checkpoints', 'c']
 nodes_commands = ['nodes', 'no']
+tx_commands = ['tx', 't']
 
 license_commands = ['license', 'l']
 exit_commands = ['exit', 'e']
@@ -198,6 +200,19 @@ try:
 			nodes_info = nodes()
 
 			print(nodes_info['table'])
+			continue
+
+		elif command in tx_commands:
+	
+			print(Fore.YELLOW + "Retrieving transaction status...")
+
+			if command_args:
+				tx_info = txs(command_args[0])
+			else:
+				tx_info = txs()
+
+			print(tx_info['tx_info'])
+
 			continue
 
 		elif command in license_commands:
