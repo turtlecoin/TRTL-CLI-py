@@ -21,23 +21,30 @@ from prettytable import PrettyTable
 from colorama import Fore, Style, init
 init(autoreset=True) #init the colored stuff so it works on windows. autoreset resets it back to set cmd color by default every time
 
-def nodes():
+def pool():
 
-    t = PrettyTable(['Name', 'URL', 'Port', 'SSL'])
+    print(Fore.YELLOW + 'Retrieving pool status.. \nYou may have to maximise the window in order to see the data correctly\n' + Fore.RESET)
 
-    nodes = requests.get('https://raw.githubusercontent.com/turtlecoin/turtlecoin-nodes-json/master/turtlecoin-nodes.json').json()
+    t = PrettyTable(['Name', 'URL', 'API', 'Type', 'Mining Address'])
 
-    for x in nodes['nodes']:
-        node_name = Fore.GREEN + x['name'] + Fore.RESET
-        url_link = Fore.GREEN + x['url'] + Fore.RESET
-        port_no = Fore.YELLOW + str(x['port']) + Fore.RESET
-        if x['ssl']:
-            ssl_status = Fore.GREEN + str(x['ssl']) + Fore.RESET
-        else:
-            ssl_status = Fore.RED + str(x['ssl']) + Fore.RESET
+    pools = requests.get('https://raw.githubusercontent.com/turtlecoin/turtlecoin-pools-json/master/v2/turtlecoin-pools.json').json()
 
-        t.add_row([node_name, url_link, port_no, ssl_status])
+    for x in pools['pools']:
 
+        pool_name = Fore.GREEN + x['name'] + Fore.RESET
+        pool_url = Fore.GREEN + x['url'] + Fore.RESET
+
+        try:
+            pool_api = Fore.YELLOW + x['api'] + Fore.RESET
+        except KeyError: # no api
+            pool_api = Fore.YELLOW + '-' + Fore.RESET
+
+        pool_type = Fore.YELLOW + x['type'] + Fore.RESET
+
+        pool_address = Fore.GREEN + x['miningAddress'] + Fore.RESET
+
+        t.add_row([pool_name, pool_url, pool_api, pool_type, pool_address])
+    
     table = t.copy()
     t.clear_rows()
     return {'table': table}

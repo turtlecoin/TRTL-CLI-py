@@ -23,6 +23,7 @@ from checkpoints import checkpoints #for c or checkpoints
 from price import price #for p or price
 from nodes import nodes # for nodes stuf
 from tx import txs # for tx stuf
+from pools import pool # for table of pools
 
 from random import randint # for random ascii art
 from colorama import Fore, Style, init
@@ -43,6 +44,7 @@ ascii_list_commands = ['ascii list', 'al']
 checkpoints_commands = ['checkpoints', 'c']
 nodes_commands = ['nodes', 'no']
 tx_commands = ['tx', 't']
+pool_commands = ['pools', 'po']
 
 license_commands = ['license', 'l']
 exit_commands = ['exit', 'e']
@@ -119,12 +121,22 @@ try:
 
 			continue
 
+		elif command in pool_commands:
+
+			pool_info = pool()
+			print(pool_info['table'])
+
+			continue
 
 		elif command.startswith('p') or command.startswith('price'):
 
 			#get out of this conditional if anything other than p or price. needed since first elif needs to take into account the numbers as well, not just the command itself
 			if command not in price_commands:
-				print(Fore.RED + f"\nSorry, command not recognized: {inp}\n")
+				if command not in pool_commands:
+					print(Fore.RED + f"\nSorry, command not recognized: {inp}\n")
+				else:
+					pass
+					
 				continue
 
 			if command and not command_args: #if command passed true and arent any additional args
