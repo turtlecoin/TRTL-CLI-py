@@ -23,7 +23,7 @@ version = Fore.YELLOW + """\
   Made by Sajo8
   Based off of TRTL CLI made by mrrovot, zack796, and brandonlehman
 
-  Version 1.3.0
+  Version 1.4.0
 """ + Style.RESET_ALL
 
 help_msg = Fore.YELLOW + """\
@@ -39,19 +39,19 @@ help_msg = Fore.YELLOW + """\
 
   Commands:
 
-	market|m       List market data
-	supply|s       Lists circulating supply
-	network|n      Shows network data
-	price|p [qty]  Gives current price information
-	ascii|a [pic]  Displays ASCII art
-	ascii list|al  Displays a list of ASCII art
-	checkpoints|c  Gets latest checkpoint update                                                  
-        nodes|no       Displays a table of available remote nodes
-        tx|t           Displays information on given tx hash/mempool
-        pools|po       Displays a table of all TurtleCoin mining pools   
+	market|m        List market data
+	supply|s        Lists circulating supply
+	network|n       Shows network data
+	price|p [qty]   Gives current price information
+	ascii|a [pic]   Displays ASCII art
+	ascii list|al   Displays a list of ASCII art
+	checkpoints|c   Gets latest checkpoint update                                                  
+        nodes|no        Displays a table of available remote nodes
+        tx|t            Displays information on given tx hash/mempool
+        pools|po [pool] Displays a table of all TurtleCoin mining pools   
 
-	license|l      Show license information
-        exit|e         Quit the program
+	license|l       Show license information
+        exit|e          Quit the program
 """ + Style.RESET_ALL
 
 welcome_msg = Fore.GREEN + """\

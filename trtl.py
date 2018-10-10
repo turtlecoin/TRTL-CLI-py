@@ -23,7 +23,7 @@ from checkpoints import checkpoints #for c or checkpoints
 from price import price #for p or price
 from nodes import nodes # for nodes stuf
 from tx import txs # for tx stuf
-from pools import pool # for table of pools
+from pools import pool, onepool # for table of (a) pool(s)
 
 from random import randint # for random ascii art
 from colorama import Fore, Style, init
@@ -123,8 +123,26 @@ try:
 
 		elif command in pool_commands:
 
-			pool_info = pool()
-			print(pool_info['table'])
+			if not command_args:
+
+				pool_info = pool()
+				print(pool_info['table'])
+
+				print(Fore.YELLOW + 'You can also use "pools <pool name>" to get information on a specific pool.')
+
+			
+			else:
+				if len(command_args) > 1:
+					pool_arg = ' '.join(command_args)
+				else:
+					pool_arg = False
+
+				if pool_arg:
+					pool_info = onepool(pool_arg)
+				else:
+					pool_info = onepool(command_args[0])
+
+				print(pool_info['pool'])
 
 			continue
 
