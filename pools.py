@@ -68,7 +68,7 @@ def onepool(input):
 
     print(Fore.YELLOW + 'Retrieving pool status.. \nYou may have to maximise the window in order to see the data correctly\n' + Fore.RESET)
 
-    t = PrettyTable(['Pool Height', 'Hashrate', 'Miners', 'Total Fee', 'Min. Payout', 'Last Block Found'])
+    t = PrettyTable(['Pool Height', 'Hashrate', 'Miners', 'Total Fee', 'Min. Payout', 'Time of Last Block Found', 'Height of Last Block Found'])
 
     pools = requests.get('https://raw.githubusercontent.com/turtlecoin/turtlecoin-pools-json/master/v2/turtlecoin-pools.json').json()
 
@@ -166,7 +166,10 @@ def onepool(input):
             block_found = str(pool_block_found)
             block_found = Fore.GREEN + block_found + Fore.RESET
 
-            t.add_row([pool_height, hashes, miners, fee, min_pay, block_found])
+            pool_block_height = data['pool']['blocks'][1]
+            block_height = Fore.GREEN + pool_block_height + Fore.RESET
+
+            t.add_row([pool_height, hashes, miners, fee, min_pay, block_found, block_height])
 
             table = t.copy()
             t.clear_rows()
@@ -228,7 +231,10 @@ def onepool(input):
             block_found = str(pool_block_found)
             block_found = Fore.GREEN + block_found + Fore.RESET
 
-            t.add_row([pool_height, hashes, miners, fee, min_pay, block_found])
+            pool_block_height = data['pool_statistics']['lastBlockFound']
+            block_height = Fore.GREEN + str(pool_block_height) + Fore.RESET
+
+            t.add_row([pool_height, hashes, miners, fee, min_pay, block_found, block_height])
 
             table = t.copy()
             t.clear_rows()
@@ -237,7 +243,7 @@ def onepool(input):
         else:
             return {'pool': err_msg}
 
-    else:
+    else: # forknote-alt
 
         if data: # only data needed here
 
@@ -291,7 +297,10 @@ def onepool(input):
             block_found = str(pool_block_found)
             block_found = Fore.GREEN + block_found + Fore.RESET
 
-            t.add_row([pool_height, hashes, miners, fee, min_pay, block_found])
+            pool_block_height = data['lastblock']['height']
+            block_height = Fore.GREEN + str(pool_block_height) + Fore.RESET
+
+            t.add_row([pool_height, hashes, miners, fee, min_pay, block_found, block_height])
 
             table = t.copy()
             t.clear_rows()
