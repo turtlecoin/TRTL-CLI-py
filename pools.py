@@ -19,7 +19,6 @@ import requests
 from prettytable import PrettyTable
 import locale
 from datetime import datetime
-import time
 
 from colorama import Fore, Style, init
 init(autoreset=True) #init the colored stuff so it works on windows. autoreset resets it back to set cmd color by default every time
@@ -32,8 +31,6 @@ locale.setlocale(locale.LC_ALL, '') # set locale for the commas
 def pool():
 
     print(Fore.YELLOW + 'Retrieving pools\' status.. \nYou may have to maximise the window in order to see the data correctly\n' + Fore.RESET)
-
-    time.sleep(1.5) # so user sees this warning
 
     t = PrettyTable(['Name', 'URL', 'API', 'Type', 'Mining Address'])
 
