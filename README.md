@@ -3,7 +3,7 @@
 Command line interface to check TurtleCoin network status and community activity.
 
 ### Version
-1.2.0
+1.4.0
 
 ## Usage
 
