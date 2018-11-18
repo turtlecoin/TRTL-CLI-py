@@ -171,6 +171,14 @@ try:
 
 					continue
 			else: #there are additional arguments passed
+
+				try:
+					amount = command_args[0]
+					print(isinstance(amount, (int, float))) # check if its a number
+				except Exception:
+					print(Fore.RED + "\nInput must be number!" + Fore.RESET)
+
+
 				command_args = list(map(int, command_args))[0] #convert list item to integer so that it can parse it. and grab it's value with [0]
 				price_info = price(command_args) # get stats
 				if price_info['received_info']: #if response 
@@ -229,12 +237,17 @@ try:
 		elif command in nodes_commands:
 			nodes_info = nodes()
 
-			print(nodes_info['table'])
+			if not command_args:
+				print(nodes_info['table'])
+			else:
+				print(nodes_info['table'])
+				print(Fore.YELLOW + "\nThis command does not accept additional arguments/options! Here's a list of all the nodes instead.\n" + Fore.RESET)
+				
 			continue
 
 		elif command in tx_commands:
 	
-			print(Fore.YELLOW + "Retrieving transaction status...")
+			print(Fore.YELLOW + "\nRetrieving transaction status...")
 
 			if command_args:
 				tx_info = txs(command_args[0])

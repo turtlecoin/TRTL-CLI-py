@@ -30,7 +30,7 @@ locale.setlocale(locale.LC_ALL, '') # set locale for the commas
 
 def pool():
 
-    print(Fore.YELLOW + 'Retrieving pools\' status.. \nYou may have to maximise the window in order to see the data correctly\n' + Fore.RESET)
+    print(Fore.YELLOW + '\npoRetrieving pools\' status.. \nYou may have to maximise the window in order to see the data correctly\n' + Fore.RESET)
 
     t = PrettyTable(['Name', 'URL', 'API', 'Type', 'Mining Address'])
 
@@ -85,11 +85,16 @@ def onepool(input):
                     height_api_link = False
                     config_api_link = False
                 
-                else:
+                elif pool_type == 'node.js':
 
                     height_api_link = api_link + 'network/stats'
                     config_api_link = api_link + 'config'
                     api_link += 'pool/stats'
+                
+                else: # cryptonote social
+                    height_api_link = False
+                    config_api_link = False
+                    # dont mess with api link
 
                 try:
                     data = requests.get(api_link).json()
@@ -106,7 +111,7 @@ def onepool(input):
             else:
                 pass
 
-        except: # that one entry which doesnt have an api link
+        except: # shrug
             pass
 
     if pool_type == 'forknote':
@@ -114,7 +119,8 @@ def onepool(input):
         if data: # only need data here
 
             pool_height = data['network']['height']
-            pool_height = Fore.GREEN + str(pool_height) + Fore.RESET
+            pool_height = Fore.GREEN + str(pool_height) + Fore.RESET 
+            
             
             pool_hr_hashes = data['pool']['hashrate']
             number_of_hr_units = len(str(pool_hr_hashes))
@@ -240,7 +246,7 @@ def onepool(input):
         else:
             return {'pool': err_msg}
 
-    else: # forknote-alt
+    elif pool_type == 'forknote-alt': 
 
         if data: # only data needed here
 
@@ -295,6 +301,72 @@ def onepool(input):
             block_found = Fore.GREEN + block_found + Fore.RESET
 
             pool_block_height = data['lastblock']['height']
+            block_height = Fore.GREEN + str(pool_block_height) + Fore.RESET
+
+            t.add_row([pool_height, hashes, miners, fee, min_pay, block_found, block_height])
+
+            table = t.copy()
+            t.clear_rows()
+            return {'pool': table}
+
+        else:
+            return {'pool': err_msg}
+    
+    else: # cryptonote.social
+
+        if data: # only need this
+            
+            pool_height = str(data['height'])
+            pool_height = Fore.GREEN + pool_height + Fore.RESET
+            
+            pool_hr_hashes = data['hashRate']
+            number_of_hr_units = len(str(pool_hr_hashes))
+        
+            if number_of_hr_units > 3:
+                pool_hr_khashes = pool_hr_hashes / 1000
+            else:
+                pool_hr_khashes = False
+            
+            if pool_hr_khashes:
+                number_of_khs_units = len(str(int(pool_hr_khashes)))
+        
+                if number_of_khs_units > 3:
+                    pool_hr_mhashes = pool_hr_khashes / 1000
+                else:
+                    pool_hr_mhashes = False
+            else:
+                pool_hr_mhashes = False
+
+            if pool_hr_mhashes:
+                hashes = str(round(pool_hr_mhashes, 2)) + " MH/s"
+            elif pool_hr_khashes:
+                hashes = str(round(pool_hr_khashes, 2)) + ' KH/s'
+            else:
+                hashes = str(round(pool_hr_hashes, 2)) + ' H/s'
+
+            hashes = Fore.GREEN + hashes + Fore.RESET
+
+            pool_miners = data['miners']
+            pool_miners_commas = locale.currency(pool_miners, symbol=False, grouping=True)
+            miners = str(int(float(pool_miners_commas))) + ' miners'
+            miners = Fore.GREEN + str(miners) + Fore.RESET
+
+            pool_fee = data['fee']
+            fee = str(pool_fee) + ' TRTL'
+            fee = Fore.YELLOW + fee + Fore.RESET
+
+            pool_min_payout_trtls = data['minimum']
+            pool_min_payout = locale.currency(pool_min_payout_trtls, symbol=False, grouping=True)
+            min_pay = str(pool_min_payout) + ' TRTL'
+            min_pay = Fore.YELLOW + min_pay + Fore.RESET
+
+            pool_block_found_epoch = data['lastBlockFoundTime']
+            pool_block_found_10chars_epoch = str(pool_block_found_epoch)[:10]
+            pool_block_found = datetime.fromtimestamp(int(pool_block_found_10chars_epoch))
+            block_found = str(pool_block_found)
+            block_found = Fore.GREEN + block_found + Fore.RESET
+
+            pool_block_height = data['lastBlockFound']
             block_height = Fore.GREEN + str(pool_block_height) + Fore.RESET
 
             t.add_row([pool_height, hashes, miners, fee, min_pay, block_found, block_height])
