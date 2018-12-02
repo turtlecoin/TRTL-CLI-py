@@ -14,7 +14,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
+from allpools import everypool
 import msgs #add the big stringz in a seperate file
 from market import market #processes and returns info for commands `m` or `market`
 from network import network #processes and returns info for commands `n` or `network`
@@ -129,9 +129,16 @@ try:
 				print(pool_info['table'])
 
 				print(Fore.YELLOW + 'You can also use "pools <pool name>" to get information on a specific pool.')
+				print(Fore.YELLOW + '\nAdditionally, you can run "pools all" to view detailed stats on all pools.')
 
 			
 			else:
+
+				if command_args[0] == 'all':
+					pool_info = everypool()
+					print(pool_info['pool'])
+					continue
+
 				if len(command_args) > 1:
 					pool_arg = ' '.join(command_args)
 				else:
