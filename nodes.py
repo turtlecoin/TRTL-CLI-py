@@ -44,4 +44,4 @@ def nodes():
     table = t.copy()
     t.clear_rows()
    
-   return {'table': table}
+    return {'table': table}
