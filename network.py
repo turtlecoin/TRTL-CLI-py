@@ -24,7 +24,7 @@ def network():
 	try:
 		print(Fore.YELLOW + "\nReceiving network stats...")
 
-		network_info = requests.get('http://public.turtlenode.io:11898/getinfo').json()
+		network_info = requests.get('https://blockapi.turtlepay.io:443/getinfo').json()
 
 		# grab height
 		height = str(network_info['height'])
